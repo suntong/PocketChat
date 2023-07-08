@@ -1,3 +1,3 @@
-package main
+package chat
 
-const port = ":3333"
+const Port = ":3333"

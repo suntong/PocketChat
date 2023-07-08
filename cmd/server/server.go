@@ -13,6 +13,8 @@ import (
 	"log"
 	"net"
 	"regexp"
+
+	chat "github.com/suntong/PocketChat"
 )
 
 //!+broadcaster
@@ -87,7 +89,7 @@ func clientWriter(conn net.Conn, ch <-chan string) {
 
 //!+main
 func main() {
-	listener, err := net.Listen("tcp", port)
+	listener, err := net.Listen("tcp", chat.Port)
 	if err != nil {
 		log.Fatal(err)
 	}
