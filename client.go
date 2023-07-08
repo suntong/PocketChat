@@ -15,7 +15,11 @@ import (
 
 //!+
 func main() {
-	conn, err := net.Dial("tcp", port)
+	serverIP := ""
+	if len(os.Args) > 1 {
+		serverIP = os.Args[1]
+	}
+	conn, err := net.Dial("tcp", serverIP+port)
 	if err != nil {
 		log.Fatal(err)
 	}
