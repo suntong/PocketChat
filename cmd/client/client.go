@@ -11,6 +11,8 @@ import (
 	"log"
 	"net"
 	"os"
+
+	chat "github.com/suntong/PocketChat"
 )
 
 //!+
@@ -19,7 +21,7 @@ func main() {
 	if len(os.Args) > 1 {
 		serverIP = os.Args[1]
 	}
-	conn, err := net.Dial("tcp", serverIP+port)
+	conn, err := net.Dial("tcp", serverIP+chat.Port)
 	if err != nil {
 		log.Fatal(err)
 	}
