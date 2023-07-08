@@ -15,7 +15,7 @@ import (
 
 //!+
 func main() {
-	conn, err := net.Dial("tcp", "localhost:8000")
+	conn, err := net.Dial("tcp", port)
 	if err != nil {
 		log.Fatal(err)
 	}
