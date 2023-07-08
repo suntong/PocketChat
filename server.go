@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"regexp"
 )
 
 //!+broadcaster
@@ -52,13 +53,18 @@ func handleConn(conn net.Conn) {
 	go clientWriter(conn, ch)
 
 	who := conn.RemoteAddr().String()
+	re := regexp.MustCompile(`.*:.(.*)$`)
+	who = re.ReplaceAllString(who, "${1}")
 	input := bufio.NewScanner(conn)
 	fmt.Fprint(conn, "Input your name: ")
 	if input.Scan() {
-		who = input.Text()
+		_who := input.Text()
+		if _who != "" {
+			who = _who
+		}
 	}
 	ch <- "You are " + who
-	messages <- who + " has arrived"
+	messages <- "-- " + who + " has arrived"
 	entering <- ch
 
 	for input.Scan() {
@@ -67,7 +73,7 @@ func handleConn(conn net.Conn) {
 	// NOTE: ignoring potential errors from input.Err()
 
 	leaving <- ch
-	messages <- who + " has left"
+	messages <- "-- " + who + " has left"
 	conn.Close()
 }
 
