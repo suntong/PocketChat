@@ -1,0 +1,49 @@
+project_name: PocketChat
+
+archives:
+  - format: tar.gz
+    wrap_in_directory: true
+    format_overrides:
+      - goos: windows
+        format: zip
+    # remove README and LICENSE
+    files:
+      - none*
+
+builds:
+  - env: [CGO_ENABLED=0]
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+    # Path to main.go file or main package. Default is `.`.
+    main: ./cmd/client
+    id: client
+    binary: chat-client
+
+  - env: [CGO_ENABLED=0]
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+    main: ./cmd/server
+    id: server
+    binary: chat-server
+
+nfpms:
+- maintainer: Tong Sun <suntong@cpan.org>
+  description: PocketChat - pocket chat client & server
+  homepage: https://github.com/suntong/PocketChat
+  license: MIT
+  formats:
+  - deb
+  - rpm
+  - apk
